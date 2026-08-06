@@ -11,6 +11,7 @@
       <set>
         <option value="$PROJECT_DIR$/discoveryService/pom.xml" />
         <option value="$PROJECT_DIR$/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/notificationservice/pom.xml" />
       </set>
     </option>
   </component>

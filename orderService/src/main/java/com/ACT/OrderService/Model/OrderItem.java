@@ -1,8 +1,8 @@
 package com.ACT.OrderService.Model;
 
 public class OrderItem {
-    private Long id;
-    private Long productId;
+    private String id;
+    private String productId;
     private String productName;
     private Integer quantity;
     private Double unitPrice;
@@ -10,7 +10,7 @@ public class OrderItem {
     
     public OrderItem() {}
     
-    public OrderItem(Long productId, String productName, Integer quantity, Double unitPrice) {
+    public OrderItem(String productId, String productName, Integer quantity, Double unitPrice) {
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
@@ -18,20 +18,19 @@ public class OrderItem {
         this.totalPrice = quantity * unitPrice;
     }
     
-    // Getters and Setters
-    public Long getId() {
+    public String getId() {
         return id;
     }
     
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
     
-    public Long getProductId() {
+    public String getProductId() {
         return productId;
     }
     
-    public void setProductId(Long productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
     
@@ -61,7 +60,6 @@ public class OrderItem {
     
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
-        // Recalculate total price when unit price changes
         if (quantity != null) {
             this.totalPrice = quantity * unitPrice;
         }

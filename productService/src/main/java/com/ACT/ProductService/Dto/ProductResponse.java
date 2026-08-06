@@ -6,15 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-
+@AllArgsConstructor
 public class ProductResponse {
     private String id;
     private String productName;
     private String productDescription;
     private BigDecimal productPrice;
-
+    private Integer stock;
 }

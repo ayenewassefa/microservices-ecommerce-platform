@@ -1,13 +1,16 @@
 package com.ACT.ProductService.Model;
 
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;  // ← IMPORT THIS!
 
 import java.math.BigDecimal;
-import org.springframework.data.annotation.Id;
 
-@Document(value="Product")
+@Document(value = "Product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -15,9 +18,16 @@ import org.springframework.data.annotation.Id;
 public class Product {
     @Id
     private String id;
-    private String productName;
-    private String productDescription;
-    private BigDecimal productPrice;
 
+    @Field("productName")
+    private String productName;
+
+    @Field("productDescription")
+    private String productDescription;
+
+    @Field("productPrice")
+    private BigDecimal productPrice;
+    @Field(name = "stock")
+    private Integer stock;
 
 }

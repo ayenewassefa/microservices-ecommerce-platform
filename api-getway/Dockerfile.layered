@@ -1,0 +1,20 @@
+# Stage 1: The Builder
+FROM eclipse-temurin:21-jre as builder
+WORKDIR extracted
+# Take the JAR we generated with Maven
+ADD target/*.jar app.jar
+# Extract the layers
+RUN java -Djarmode=layertools -jar app.jar extract
+
+# Stage 2: The actual Runtime Image
+FROM eclipse-temurin:21-jre
+WORKDIR application
+# Copy the extracted layers from the builder stage
+COPY --from=builder extracted/dependencies/ ./
+COPY --from=builder extracted/spring-boot-loader/ ./
+COPY --from=builder extracted/snapshot-dependencies/ ./
+COPY --from=builder extracted/application/ ./
+
+EXPOSE 8080
+# NOTE: In Spring Boot 3, the Launcher class moved to a new package!
+ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]

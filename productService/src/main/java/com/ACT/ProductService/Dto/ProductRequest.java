@@ -16,5 +16,5 @@ public class ProductRequest {
 private String productName;
 private String productDescription;
 private BigDecimal productPrice;
-
+private Integer stock;
 }

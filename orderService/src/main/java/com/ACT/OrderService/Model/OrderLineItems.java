@@ -16,10 +16,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class OrderLineItems {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String skuCode;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String productId;
     private BigDecimal price;
     private Integer quantity;
+    private String productName;
+
 }
