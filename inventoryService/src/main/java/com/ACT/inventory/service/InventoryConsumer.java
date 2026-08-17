@@ -36,13 +36,13 @@ public class InventoryConsumer {
 
                     decreaseStock(productId, quantity);
                 }
-                log.info("✅ Stock updated for order: {}", orderNumber);
+                log.info("Stock updated for order: {}", orderNumber);
             } else {
-                log.warn("⚠️ No items found in event for order: {}", orderNumber);
+                log.warn(" No items found in event for order: {}", orderNumber);
             }
 
         } catch (Exception e) {
-            log.error("❌ Failed to process inventory event: {}", e.getMessage(), e);
+            log.error("Failed to process inventory event: {}", e.getMessage(), e);
         }
     }
 
@@ -63,7 +63,7 @@ public class InventoryConsumer {
 
         // Prevent negative stock (optional, but good for business logic)
         if (newQuantity < 0) {
-            log.warn("⚠ Stock would become negative! Product: {}, Current: {}, Requested: {}",
+            log.warn(" Stock would become negative! Product: {}, Current: {}, Requested: {}",
                     productId, inventory.getQuantity(), quantity);
             newQuantity = 0;
         }

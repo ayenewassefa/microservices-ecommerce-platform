@@ -33,7 +33,6 @@ public class OrderService {
     private final WebClient webClient;
     private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;
 
-    // ✅ Accept token parameter
     public String placeOrder(OrderRequest orderRequest, String token) {
         return Observation.createNotStarted("place-order-span", observationRegistry)
                 .observe(() -> {
@@ -62,17 +61,16 @@ public class OrderService {
                     order.setOrderLineItemsList(orderLineItems);
 
                     orderRepository.save(order);
-                    log.info("✅ Order saved: {}", order.getOrderNumber());
+                    log.info(" Order saved: {}", order.getOrderNumber());
 
                     // Publish Kafka event
                     publishOrderEvent(order, orderLineItems);
 
-                    log.info("✅ Order CONFIRMED and Kafka event sent: {}", order.getOrderNumber());
+                    log.info(" Order CONFIRMED and Kafka event sent: {}", order.getOrderNumber());
                     return "Order Placed Successfully";
                 });
     }
 
-    // ✅ Check availability with token
     private boolean checkProductAvailability(String productId, int requestedQuantity, String token) {
         try {
             ProductStockResponse response = getProductStock(productId, token);
@@ -112,10 +110,10 @@ public class OrderService {
 
             OrderPlacedEvent event = new OrderPlacedEvent(order.getOrderNumber(), items);
             kafkaTemplate.send("notificationTopic", event);
-            log.info("✅ Kafka event sent for order: {} | Items: {}", order.getOrderNumber(), items.size());
+            log.info(" Kafka event sent for order: {} | Items: {}", order.getOrderNumber(), items.size());
 
         } catch (Exception e) {
-            log.error("❌ Failed to send Kafka event: {}", e.getMessage(), e);
+            log.error(" Failed to send Kafka event: {}", e.getMessage(), e);
         }
     }
 
