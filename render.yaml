@@ -34,7 +34,7 @@ services:
       - key: EUREKA_URL
         value: http://discovery-server:8761/eureka/
       - key: KEYCLOAK_URL
-        value: http://keycloak:8080/realms/spring-boot-microservices-realm   # port 8080, not 8181
+        value: http://keycloak:8080/realms/spring-boot-microservices-realm
     ports:
       - port: 8080
 
