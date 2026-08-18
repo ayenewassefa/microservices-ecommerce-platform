@@ -13,7 +13,6 @@ services:
         value: dev-file
     ports:
       - port: 8080
-        hostPort: 8181
 
   - type: web
     name: discovery-server
@@ -22,10 +21,9 @@ services:
     dockerContext: .
     envVars:
       - key: EUREKA_URL
-        value: http://discovery-server:8761/eureka/   # internal service name
+        value: http://discovery-server:8761/eureka/
     ports:
       - port: 8761
-
 
   - type: web
     name: api-gateway
@@ -36,7 +34,7 @@ services:
       - key: EUREKA_URL
         value: http://discovery-server:8761/eureka/
       - key: KEYCLOAK_URL
-        value: http://keycloak:8181/realms/spring-boot-microservices-realm   # internal Keycloak URL
+        value: http://keycloak:8080/realms/spring-boot-microservices-realm   # port 8080, not 8181
     ports:
       - port: 8080
 
@@ -49,11 +47,11 @@ services:
       - key: EUREKA_URL
         value: http://discovery-server:8761/eureka/
       - key: SPRING_DATA_MONGODB_URI
-        value: mongodb://<your-mongodb-atlas-uri>/product_db   # replace with your Atlas URI
+        value: ${MONGO_URI}
       - key: SPRING_KAFKA_BOOTSTRAP_SERVERS
-        value: <your-confluent-cloud-bootstrap-server>
+        value: ${KAFKA_BOOTSTRAP}
       - key: KEYCLOAK_URL
-        value: http://keycloak:8181/realms/spring-boot-microservices-realm
+        value: http://keycloak:8080/realms/spring-boot-microservices-realm
     ports:
       - port: 8081
 
@@ -66,15 +64,15 @@ services:
       - key: EUREKA_URL
         value: http://discovery-server:8761/eureka/
       - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://<your-aiven-mysql-host>/order_db?useSSL=true&serverTimezone=UTC
+        value: ${MYSQL_URL}
       - key: SPRING_DATASOURCE_USERNAME
-        value: <your-mysql-username>
+        value: ${MYSQL_USER}
       - key: SPRING_DATASOURCE_PASSWORD
-        value: <your-mysql-password>
+        value: ${MYSQL_PASSWORD}
       - key: SPRING_KAFKA_BOOTSTRAP_SERVERS
-        value: <your-confluent-cloud-bootstrap-server>
+        value: ${KAFKA_BOOTSTRAP}
       - key: KEYCLOAK_URL
-        value: http://keycloak:8181/realms/spring-boot-microservices-realm
+        value: http://keycloak:8080/realms/spring-boot-microservices-realm
     ports:
       - port: 8082
 
@@ -87,9 +85,9 @@ services:
       - key: EUREKA_URL
         value: http://discovery-server:8761/eureka/
       - key: SPRING_DATA_MONGODB_URI
-        value: mongodb://<your-mongodb-atlas-uri>/inventory_db
+        value: ${MONGO_URI}
       - key: SPRING_KAFKA_BOOTSTRAP_SERVERS
-        value: <your-confluent-cloud-bootstrap-server>
+        value: ${KAFKA_BOOTSTRAP}
     ports:
       - port: 8083
 
@@ -102,7 +100,7 @@ services:
       - key: EUREKA_URL
         value: http://discovery-server:8761/eureka/
       - key: SPRING_KAFKA_BOOTSTRAP_SERVERS
-        value: <your-confluent-cloud-bootstrap-server>
+        value: ${KAFKA_BOOTSTRAP}
 
   - type: web
     name: frontend
